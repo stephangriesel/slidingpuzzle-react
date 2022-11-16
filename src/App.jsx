@@ -1,6 +1,17 @@
 import React from 'react'
 import './utils/index'
 
+class GameState {
+  // singleton with static property
+  static instance = null;
+
+  // return current instance if exists if not create a new instance
+  static getInstance () {
+    if (!GameState.instance) GameState.instance = new GameState();
+    return GameState.instance;
+  }
+}
+
 const App = () => {
   return (
     <div className="App grid place-content-center">
