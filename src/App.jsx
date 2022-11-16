@@ -10,6 +10,17 @@ class GameState {
     if (!GameState.instance) GameState.instance = new GameState();
     return GameState.instance;
   }
+
+  //static property called solvedBoard which will store the solved state of the board.
+  static getNewBoard () {
+    return Array(NUM_TILES).fill(0).map((x, index) => [
+      Math.floor(index / NUM_ROWS), 
+      index % NUM_COLS
+    ]);
+  }
+
+  static solvedBoard = GameState.getNewBoard();
+
 }
 
 const App = () => {
