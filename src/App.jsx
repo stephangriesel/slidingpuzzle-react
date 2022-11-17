@@ -54,6 +54,26 @@ class GameState {
     this.shuffling = false;
   }
 
+  canMoveTile (index) {
+    // tile index invalid, set to false
+    if (index < 0 || index >= NUM_TILES) return false;
+
+    // current position tile and empty tile
+    const tilePos = this.board[index];
+    const emptyPos = this.board[EMPTY_INDEX];
+
+    // set indices to 1 if same row
+    if (tilePos[0] === emptyPos[0])
+      return Math.abs(tilePos[1] - emptyPos[1]) === 1;
+
+    // set indices to 1 if in same column
+    else if (tilePos[1] === emptyPos[1])
+      return Math.abs(tilePos[0] - emptyPos[0]) === 1;
+
+    // if conditions above not met set to false
+    else return false;
+  }
+
 }
 
 const App = () => {
