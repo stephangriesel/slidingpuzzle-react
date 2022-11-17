@@ -33,6 +33,27 @@ class GameState {
   //static property to store solved state board.
   static solvedBoard = GameState.getNewBoard();
 
+  constructor () {
+    this.startNewGame();
+  }
+
+  startNewGame () {
+    this.moves = 0; // move counter set to 0
+    this.board = GameState.getNewBoard();
+    this.stack = [];
+    this.shuffle(); // TODO: Create Method
+  }
+
+  shuffle () {
+    // flag to shuffle board
+    this.shuffling = true;
+
+    // TODO: shuffle
+
+    // reset flag
+    this.shuffling = false;
+  }
+
 }
 
 const App = () => {
