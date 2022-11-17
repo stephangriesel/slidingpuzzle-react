@@ -1,17 +1,28 @@
 import React from 'react'
-import './utils/index'
+import {rand} from './utils/index'
+
+// set grid
+const NUM_ROWS = 3;
+const NUM_COLS = 3;
+const NUM_TILES = NUM_ROWS * NUM_COLS;
+// index of the empty tile
+const EMPTY_INDEX = NUM_TILES - 1;
+// defines the minimum and maximum number of random moves to scramble the puzzle board
+const SHUFFLE_MOVES_RANGE = [60, 80];
+// direction of cards
+const MOVE_DIRECTIONS = ['up', 'down', 'left', 'right'];
 
 class GameState {
   // singleton with static property
   static instance = null;
 
-  // return current instance if exists if not create a new instance
+  // return current instance if exists if not create a new instance.
   static getInstance () {
     if (!GameState.instance) GameState.instance = new GameState();
     return GameState.instance;
   }
 
-  //static property called solvedBoard which will store the solved state of the board.
+  // static method to generate board state. correct order: i-th at Math.floor(i / 3)th row and i % 3rd column.
   static getNewBoard () {
     return Array(NUM_TILES).fill(0).map((x, index) => [
       Math.floor(index / NUM_ROWS), 
@@ -19,6 +30,7 @@ class GameState {
     ]);
   }
 
+  //static property to store solved state board.
   static solvedBoard = GameState.getNewBoard();
 
 }
