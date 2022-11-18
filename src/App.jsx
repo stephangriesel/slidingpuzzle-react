@@ -74,6 +74,35 @@ class GameState {
     else return false;
   }
 
+  moveTile (index) {
+    // not shuffling and board already solved
+    // TODO: replace stub
+    if (!this.shuffling && this.isSolved()) return false;
+
+    // not possible to move to first place
+    if (!this.canMoveTile(index)) return false;
+
+    // position of tile & empty tile
+    const emptyPosition = [...this.board[EMPTY_INDEX]];
+    const tilePosition = [...this.board[index]];
+
+    // copy & swop positions
+    let boardAfterMove = [...this.board];    
+    boardAfterMove[EMPTY_INDEX] = tilePosition;
+    boardAfterMove[index] = emptyPosition;
+
+    // update board, move counter & stack
+    if (!this.shuffling) this.stack.push(this.board);
+    this.board = boardAfterMove;
+    if (!this.shuffling) this.moves += 1;
+
+    return true;
+  }
+
+  isSolved () {
+    return false; // stub
+  }
+
 }
 
 const App = () => {
