@@ -44,13 +44,15 @@ class GameState {
     this.shuffle(); // TODO: Create Method
   }
 
-  shuffle() {
-    // flag to shuffle board
+  shuffle () {
+    // flat to shuffle board
     this.shuffling = true;
+    let shuffleMoves = rand(...SHUFFLE_MOVES_RANGE);
+    while (shuffleMoves --> 0) {
+      this.moveInDirection (MOVE_DIRECTIONS[rand(0,2)]);
+    }
 
-    // TODO: shuffle
-
-    // reset flag
+    // reset shuffle
     this.shuffling = false;
   }
 
