@@ -1,5 +1,5 @@
 import React from 'react'
-import {rand} from './utils/index'
+import { rand } from './utils/index'
 
 // set grid
 const NUM_ROWS = 3;
@@ -17,15 +17,15 @@ class GameState {
   static instance = null;
 
   // return current instance if exists if not create a new instance.
-  static getInstance () {
+  static getInstance() {
     if (!GameState.instance) GameState.instance = new GameState();
     return GameState.instance;
   }
 
   // static method to generate board state. correct order: i-th at Math.floor(i / 3)th row and i % 3rd column.
-  static getNewBoard () {
+  static getNewBoard() {
     return Array(NUM_TILES).fill(0).map((x, index) => [
-      Math.floor(index / NUM_ROWS), 
+      Math.floor(index / NUM_ROWS),
       index % NUM_COLS
     ]);
   }
@@ -33,18 +33,18 @@ class GameState {
   //static property to store solved state board.
   static solvedBoard = GameState.getNewBoard();
 
-  constructor () {
+  constructor() {
     this.startNewGame();
   }
 
-  startNewGame () {
+  startNewGame() {
     this.moves = 0; // move counter set to 0
     this.board = GameState.getNewBoard();
     this.stack = [];
     this.shuffle(); // TODO: Create Method
   }
 
-  shuffle () {
+  shuffle() {
     // flag to shuffle board
     this.shuffling = true;
 
@@ -54,7 +54,7 @@ class GameState {
     this.shuffling = false;
   }
 
-  canMoveTile (index) {
+  canMoveTile(index) {
     // tile index invalid, set to false
     if (index < 0 || index >= NUM_TILES) return false;
 
@@ -74,7 +74,7 @@ class GameState {
     else return false;
   }
 
-  moveTile (index) {
+  moveTile(index) {
     // not shuffling and board already solved
     // TODO: replace stub
     if (!this.shuffling && this.isSolved()) return false;
@@ -87,7 +87,7 @@ class GameState {
     const tilePosition = [...this.board[index]];
 
     // copy & swop positions
-    let boardAfterMove = [...this.board];    
+    let boardAfterMove = [...this.board];
     boardAfterMove[EMPTY_INDEX] = tilePosition;
     boardAfterMove[index] = emptyPosition;
 
@@ -99,24 +99,31 @@ class GameState {
     return true;
   }
 
-  isSolved () {
+  isSolved() {
     return false; // stub
   }
 
-  moveInDirection (dir) {
+  // undo
+  undo() {
+    if (this.stack.length === 0) return false;
+    this.board = this.stack.pop();
+    this.moves -= 1;
+  }
+
+  moveInDirection(dir) {
     // empty square position
     const epos = this.board[EMPTY_INDEX];
 
     // move tile into place when selected tile moved
-    const posToMove = dir === 'up' ? [epos[0]+1, epos[1]]
-      : dir === 'down' ? [epos[0]-1, epos[1]]
-      : dir === 'left' ? [epos[0], epos[1]+1]
-      : dir === 'right' ? [epos[0], epos[1]-1]
-      : epos;
+    const posToMove = dir === 'up' ? [epos[0] + 1, epos[1]]
+      : dir === 'down' ? [epos[0] - 1, epos[1]]
+        : dir === 'left' ? [epos[0], epos[1] + 1]
+          : dir === 'right' ? [epos[0], epos[1] - 1]
+            : epos;
 
     // find index tile in posToMove
     let tileToMove = EMPTY_INDEX;
-    for (let i=0; i<NUM_TILES; i++) {
+    for (let i = 0; i < NUM_TILES; i++) {
       if (this.board[i][0] === posToMove[0] && this.board[i][1] === posToMove[1]) {
         tileToMove = i;
         break;
@@ -133,15 +140,15 @@ const App = () => {
   return (
     <div className="App grid place-content-center">
       <div className="grid grid-cols-3 gap-4 place-content-center h-48">
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-          <div>4</div>
-          <div>5</div>
-          <div>6</div>
-          <div>7</div>
-          <div>8</div>
-          <div>9</div>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+        <div>9</div>
       </div>
     </div>
   )
