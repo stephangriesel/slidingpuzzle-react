@@ -103,6 +103,30 @@ class GameState {
     return false; // stub
   }
 
+  moveInDirection (dir) {
+    // empty square position
+    const epos = this.board[EMPTY_INDEX];
+
+    // move tile into place when selected tile moved
+    const posToMove = dir === 'up' ? [epos[0]+1, epos[1]]
+      : dir === 'down' ? [epos[0]-1, epos[1]]
+      : dir === 'left' ? [epos[0], epos[1]+1]
+      : dir === 'right' ? [epos[0], epos[1]-1]
+      : epos;
+
+    // find index tile in posToMove
+    let tileToMove = EMPTY_INDEX;
+    for (let i=0; i<NUM_TILES; i++) {
+      if (this.board[i][0] === posToMove[0] && this.board[i][1] === posToMove[1]) {
+        tileToMove = i;
+        break;
+      }
+    }
+
+    // move tile
+    this.moveTile(tileToMove);
+  }
+
 }
 
 const App = () => {
