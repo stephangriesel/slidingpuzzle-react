@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { rand } from './utils/index'
 
 // set grid
@@ -153,6 +153,58 @@ class GameState {
   }
 }
 
+function useGameState () {
+  // current GameState instance
+  const gameState = GameState.getInstance();
+
+  // state from GameState instance
+  const [state, setState] = useState(gameState.getState());
+
+  // new game and update state
+  function newGame () {
+    gameState.startNewGame();
+    setState(gameState.getState());
+  }
+
+  // undo latest move and update state
+  function undo () {
+    gameState.undo();
+    setState(gameState.getState());
+  }
+
+  // function move i-th tile\
+  // update state
+  function move (i) {
+    return function () {
+      gameState.moveTile(i);
+      setState(gameState.getState());
+    }
+  }
+
+
+
+  // only run when GameState instance changes
+  useEffect(() => {
+    // attach keyboard event listeners to document
+    document.addEventListener('keyup', function listeners (event) {
+
+      if (event.key === 37) gameState.moveInDirection('left');
+      else if (event.key === 38) gameState.moveInDirection('up');
+      else if (event.key === 39) gameState.moveInDirection('right');
+      else if (event.key === 40) gameState.moveInDirection('down');
+
+      setState(gameState.getState());
+    });
+
+    // remove event listeners when app unmounts
+    return (() => window.removeEventListener(listeners));
+  }, [gameState]); 
+
+
+  // expose state and update function components 
+  return [state.board, state.moves, state.solved, newGame, undo, move];
+}
+
 const App = () => {
   return (
     <div className="App grid place-content-center">
@@ -167,6 +219,7 @@ const App = () => {
         <div>8</div>
         <div>9</div>
       </div>
+      <footer>again</footer>
     </div>
   )
 }
