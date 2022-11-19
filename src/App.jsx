@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { rand } from './utils/index'
 
 // set grid
@@ -44,12 +44,12 @@ class GameState {
     this.shuffle(); // TODO: Create Method
   }
 
-  shuffle () {
+  shuffle() {
     // flat to shuffle board
     this.shuffling = true;
     let shuffleMoves = rand(...SHUFFLE_MOVES_RANGE);
-    while (shuffleMoves --> 0) { //  post decrement operator -- followed by the greater than operator > (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Decrement)
-      this.moveInDirection (MOVE_DIRECTIONS[rand(0,2)]);
+    while (shuffleMoves-- > 0) { //  post decrement operator -- followed by the greater than operator > (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Decrement)
+      this.moveInDirection(MOVE_DIRECTIONS[rand(0, 2)]);
     }
 
     // reset shuffle
@@ -101,10 +101,10 @@ class GameState {
     return true;
   }
 
-  isSolved () {
-    for (let i=0; i<NUM_TILES; i++) {
-      if (this.board[i][0] !== GameState.solvedBoard[i][0] 
-          || this.board[i][1] !== GameState.solvedBoard[i][1]) 
+  isSolved() {
+    for (let i = 0; i < NUM_TILES; i++) {
+      if (this.board[i][0] !== GameState.solvedBoard[i][0]
+        || this.board[i][1] !== GameState.solvedBoard[i][1])
         return false;
     }
     return true;
@@ -140,10 +140,10 @@ class GameState {
     // move tile
     this.moveTile(tileToMove);
   }
-  getState () { 
+  getState() {
     // this refer to object created, not current gamestate
     // store context in constant 'self'
-    const self = this;    
+    const self = this;
 
     return {
       board: self.board,
@@ -153,7 +153,7 @@ class GameState {
   }
 }
 
-function useGameState () {
+function useGameState() {
   // current GameState instance
   const gameState = GameState.getInstance();
 
@@ -161,20 +161,20 @@ function useGameState () {
   const [state, setState] = useState(gameState.getState());
 
   // new game and update state
-  function newGame () {
+  function newGame() {
     gameState.startNewGame();
     setState(gameState.getState());
   }
 
   // undo latest move and update state
-  function undo () {
+  function undo() {
     gameState.undo();
     setState(gameState.getState());
   }
 
   // function move i-th tile\
   // update state
-  function move (i) {
+  function move(i) {
     return function () {
       gameState.moveTile(i);
       setState(gameState.getState());
@@ -186,7 +186,7 @@ function useGameState () {
   // only run when GameState instance changes
   useEffect(() => {
     // attach keyboard event listeners to document
-    document.addEventListener('keyup', function listeners (event) {
+    document.addEventListener('keyup', function listeners(event) {
 
       if (event.key === 37) gameState.moveInDirection('left');
       else if (event.key === 38) gameState.moveInDirection('up');
@@ -198,7 +198,7 @@ function useGameState () {
 
     // remove event listeners when app unmounts
     return (() => window.removeEventListener(listeners));
-  }, [gameState]); 
+  }, [gameState]);
 
 
   // expose state and update function components 
@@ -206,8 +206,15 @@ function useGameState () {
 }
 
 const App = () => {
+  // const [board, moves, solved, newGame, undo, move] = useGameState();
   return (
     <div className="App grid place-content-center">
+      <div className="place-content-center h-32">
+        <div className='moves'>
+          {/* {moves} */}
+        </div>
+        {/* <button onClick={undo}>UNDO</button> */}
+      </div>
       <div className="grid grid-cols-3 gap-4 place-content-center h-48">
         <div>1</div>
         <div>2</div>
