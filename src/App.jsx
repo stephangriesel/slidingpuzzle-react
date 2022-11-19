@@ -48,7 +48,7 @@ class GameState {
     // flat to shuffle board
     this.shuffling = true;
     let shuffleMoves = rand(...SHUFFLE_MOVES_RANGE);
-    while (shuffleMoves --> 0) {
+    while (shuffleMoves --> 0) { //  post decrement operator -- followed by the greater than operator > (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Decrement)
       this.moveInDirection (MOVE_DIRECTIONS[rand(0,2)]);
     }
 
@@ -101,8 +101,13 @@ class GameState {
     return true;
   }
 
-  isSolved() {
-    return false; // stub
+  isSolved () {
+    for (let i=0; i<NUM_TILES; i++) {
+      if (this.board[i][0] !== GameState.solvedBoard[i][0] 
+          || this.board[i][1] !== GameState.solvedBoard[i][1]) 
+        return false;
+    }
+    return true;
   }
 
   // undo
@@ -135,7 +140,17 @@ class GameState {
     // move tile
     this.moveTile(tileToMove);
   }
+  getState () { 
+    // this refer to object created, not current gamestate
+    // store context in constant 'self'
+    const self = this;    
 
+    return {
+      board: self.board,
+      moves: self.moves,
+      solved: self.isSolved(),
+    };
+  }
 }
 
 const App = () => {
