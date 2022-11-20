@@ -181,52 +181,47 @@ function useGameState() {
     }
   }
 
-
-
-  // only run when GameState instance changes
-  useEffect(() => {
-    // attach keyboard event listeners to document
-    document.addEventListener('keyup', function listeners(event) {
-
-      if (event.key === 37) gameState.moveInDirection('left');
-      else if (event.key === 38) gameState.moveInDirection('up');
-      else if (event.key === 39) gameState.moveInDirection('right');
-      else if (event.key === 40) gameState.moveInDirection('down');
-
-      setState(gameState.getState());
-    });
-
-    // remove event listeners when app unmounts
-    return (() => window.removeEventListener(listeners));
-  }, [gameState]);
-
-
-  // expose state and update function components 
   return [state.board, state.moves, state.solved, newGame, undo, move];
 }
 
+function Tile ({index, pos, onClick}) {
+  const top = pos[0]*100 + 5;
+  const left = pos[1]*100 + 5;
+  const bgLeft = (index%3)*100 + 5;
+  const bgTop = Math.floor(index/3)*100 + 5;
+  
+  return <div 
+    className='tile'
+    onClick={onClick}
+    style={{top, left, backgroundPosition: `-${bgLeft}px -${bgTop}px`}} 
+  />;
+}
+
 const App = () => {
-  // const [board, moves, solved, newGame, undo, move] = useGameState();
+  const [board, moves, solved, newGame, undo, move] = useGameState();
+
   return (
     <div className="App grid place-content-center">
       <div className="place-content-center h-32">
         <div className='moves'>
-          {/* {moves} */}
+          {moves}
         </div>
-        {/* <button onClick={undo}>UNDO</button> */}
+        <button onClick={undo}>UNDO</button>
       </div>
-      <div className="grid grid-cols-3 gap-4 place-content-center h-48">
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-        <div>6</div>
-        <div>7</div>
-        <div>8</div>
-        <div>9</div>
+      <div className='board'>
+      {
+        board.slice(0,-1).map((pos, index) => ( 
+          <Tile index={index} pos={pos} onClick={move(index)} />
+        ))
+      }
+      { solved &&
+          <div className='overlay'>
+            <button className='big-button' onClick={newGame}>
+              PLAY AGAIN 
+            </button>
+          </div>
+      }
       </div>
-      <footer>again</footer>
     </div>
   )
 }
