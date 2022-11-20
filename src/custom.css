@@ -6,8 +6,9 @@
 }
 
 .tile {
-    width: 95px;
-    height: 95px;
+    /* currently set for 9 grid, for 16 grid adjust to 95px */
+    width: 135px; 
+    height: 135px;
     position: absolute;
     background: white;
     transition: all 0.1s ease-in-out;
