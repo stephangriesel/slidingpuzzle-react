@@ -1,14 +1,14 @@
 .board {
-    width: 405px;
-    height: 405px;
+    width: 410px;
+    height: 410px;
     position: relative;
-    background: #ddd;
+    /* background: #ddd; */
 }
 
 .tile {
     /* currently set for 9 grid, for 16 grid adjust to 95px */
-    width: 135px; 
-    height: 135px;
+    width: 130px; 
+    height: 130px;
     position: absolute;
     background: white;
     transition: all 0.1s ease-in-out;
