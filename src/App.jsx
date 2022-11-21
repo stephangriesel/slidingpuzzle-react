@@ -41,15 +41,16 @@ class GameState {
     this.moves = 0; // move counter set to 0
     this.board = GameState.getNewBoard();
     this.stack = [];
-    this.shuffle(); // TODO: Create Method
+    this.shuffle(); 
   }
 
-  shuffle() {
-    // flat to shuffle board
+  shuffle() { // TO DO: Create button with onClick to shuffle
+    // Shuffling magic happens here
     this.shuffling = true;
     let shuffleMoves = rand(...SHUFFLE_MOVES_RANGE);
+    console.log("check shuffle moves",shuffleMoves)
     while (shuffleMoves-- > 0) { //  post decrement operator -- followed by the greater than operator > (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Decrement)
-      this.moveInDirection(MOVE_DIRECTIONS[rand(0, 2)]);
+      this.moveInDirection(MOVE_DIRECTIONS[rand(0, 3)]); // shuffle currently set to 3, update this to shuffle even more
     }
 
     // reset shuffle
@@ -185,13 +186,13 @@ function useGameState() {
 }
 
 // Note to self: For more tiles decrease dimension to make them all fit.
-// Currently set for 9 grid, for 16 grid change to 100
+// Currently set for 9 grid, for 16 grid change 132 to 100
 // Remember to also ajust index remainder values
 function Tile ({index, pos, onClick}) {
-  const top = pos[0]*130 + 5;
-  const left = pos[1]*130 + 5;
-  const bgLeft = (index%3)*130 + 5;
-  const bgTop = Math.floor(index/3)*130 + 5;
+  const top = pos[0]*132 + 5;
+  const left = pos[1]*132 + 5;
+  const bgLeft = (index%3)*132 + 5;
+  const bgTop = Math.floor(index/3)*132 + 5;
 
   return <div 
     className='tile'
