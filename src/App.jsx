@@ -212,7 +212,7 @@ const App = () => {
         </div>
         <button onClick={undo}>UNDO</button>
       </div>
-      <div className='board lg:scale-150 md:scale-125 sm:scale-0'>
+      <div className='board scale-50 lg:scale-150 md:scale-100'>
       {
         board.slice(0,-1).map((pos, index) => ( 
           <Tile index={index} pos={pos} onClick={move(index)} />
