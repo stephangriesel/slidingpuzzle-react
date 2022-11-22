@@ -1,6 +1,6 @@
 .board {
-    width: 410px;
-    height: 410px;
+    width: 400px;
+    height: 400px;
     position: relative;
     /* background: #ddd; */
 }
@@ -18,8 +18,8 @@
   }
 
   .overlay {
-    width: 405px;
-    height: 405px;
+    width: 400px;
+    height: 400px;
     position: absolute;
     top: 0;
     left: 0;

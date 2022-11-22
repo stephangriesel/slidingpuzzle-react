@@ -205,14 +205,14 @@ const App = () => {
   const [board, moves, solved, newGame, undo, move] = useGameState();
 
   return (
-    <div className="App grid place-content-center">
+    <div className="grid place-content-center">
       <div className="place-content-center h-32">
         <div className='moves'>
           {moves}
         </div>
         <button onClick={undo}>UNDO</button>
       </div>
-      <div className='board'>
+      <div className='board lg:scale-150 md:scale-125 sm:scale-0'>
       {
         board.slice(0,-1).map((pos, index) => ( 
           <Tile index={index} pos={pos} onClick={move(index)} />
