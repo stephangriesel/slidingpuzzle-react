@@ -41,14 +41,14 @@ class GameState {
     this.moves = 0; // move counter set to 0
     this.board = GameState.getNewBoard();
     this.stack = [];
-    this.shuffle(); 
+    this.shuffle();
   }
 
   shuffle() { // TO DO: Create button with onClick to shuffle
     // Shuffling magic happens here
     this.shuffling = true;
     let shuffleMoves = rand(...SHUFFLE_MOVES_RANGE);
-    console.log("check shuffle moves",shuffleMoves)
+    console.log("check shuffle moves", shuffleMoves)
     while (shuffleMoves-- > 0) { //  post decrement operator -- followed by the greater than operator > (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Decrement)
       this.moveInDirection(MOVE_DIRECTIONS[rand(0, 3)]); // shuffle currently set to 3, update this to shuffle even more
     }
@@ -188,16 +188,16 @@ function useGameState() {
 // Note to self: For more tiles decrease dimension to make them all fit.
 // Currently set for 9 grid, for 16 grid change 132 to 100
 // Remember to also ajust index remainder values
-function Tile ({index, pos, onClick}) {
-  const top = pos[0]*132 + 5;
-  const left = pos[1]*132 + 5;
-  const bgLeft = (index%3)*132 + 5;
-  const bgTop = Math.floor(index/3)*132 + 5;
+function Tile({ index, pos, onClick }) {
+  const top = pos[0] * 132 + 5;
+  const left = pos[1] * 132 + 5;
+  const bgLeft = (index % 3) * 132 + 5;
+  const bgTop = Math.floor(index / 3) * 132 + 5;
 
-  return <div 
+  return <div
     className='tile'
     onClick={onClick}
-    style={{top, left, backgroundPosition: `-${bgLeft}px -${bgTop}px`}} 
+    style={{ top, left, backgroundPosition: `-${bgLeft}px -${bgTop}px` }}
   />;
 }
 
@@ -205,26 +205,28 @@ const App = () => {
   const [board, moves, solved, newGame, undo, move] = useGameState();
 
   return (
-    <div className="grid place-content-center">
-      <div className="place-content-center h-32">
+    <div className="flex flex-col items-center">
+      <div>
         <div className='moves'>
           {moves}
         </div>
-        <button onClick={undo}>UNDO</button>
       </div>
-      <div className='board scale-50 lg:scale-150 md:scale-100'>
-      {
-        board.slice(0,-1).map((pos, index) => ( 
-          <Tile index={index} pos={pos} onClick={move(index)} />
-        ))
-      }
-      { solved &&
+      <div className='board mt-32 scale-50 lg:scale-150 md:scale-100'>
+        {
+          board.slice(0, -1).map((pos, index) => (
+            <Tile index={index} pos={pos} onClick={move(index)} />
+          ))
+        }
+        {solved &&
           <div className='overlay'>
             <button className='big-button' onClick={newGame}>
-              PLAY AGAIN 
+              PLAY AGAIN
             </button>
           </div>
-      }
+        }
+      </div>
+      <div>
+        <button className='mt-32' onClick={undo}>UNDO</button>
       </div>
     </div>
   )
