@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { rand } from './utils/index'
+import ConfettiExplosion from 'react-confetti-explosion'
 
 // set grid
 const NUM_ROWS = 3;
@@ -11,6 +12,14 @@ const EMPTY_INDEX = NUM_TILES - 1;
 const SHUFFLE_MOVES_RANGE = [60, 80];
 // direction of cards
 const MOVE_DIRECTIONS = ['up', 'down', 'left', 'right'];
+
+const tinyExplodeProps = {
+  force: 0.4,
+  duration: 2000,
+  particleCount: 30,
+  floorHeight: 500,
+  floorWidth: 300
+};
 
 class GameState {
   // singleton with static property
@@ -79,7 +88,6 @@ class GameState {
 
   moveTile(index) {
     // not shuffling and board already solved
-    // TODO: replace stub
     if (!this.shuffling && this.isSolved()) return false;
 
     // not possible to move to first place
@@ -203,15 +211,15 @@ function Tile({ index, pos, onClick }) {
 
 const App = () => {
   const [board, moves, solved, newGame, undo, move] = useGameState();
-
+  const [isExploding, setIsExploding] = useState(false);
   return (
     <div className="flex flex-col items-center">
-      <div>
+      <div className='mb-10'>
         <div className='moves'>
           {moves}
         </div>
       </div>
-      <div className='board mt-32 scale-50 lg:scale-150 md:scale-100'>
+      <div className='board scale-75 md:scale-90 lg:scale-100 transition-all'>
         {
           board.slice(0, -1).map((pos, index) => (
             <Tile index={index} pos={pos} onClick={move(index)} />
@@ -219,14 +227,18 @@ const App = () => {
         }
         {solved &&
           <div className='overlay'>
-            <button className='big-button' onClick={newGame}>
-              PLAY AGAIN
-            </button>
+            {isExploding && (
+              <button onClick={newGame} onLoad={() => setIsExploding(!isExploding)}>
+                <ConfettiExplosion {...tinyExplodeProps} />
+                NEW GAME?
+              </button>
+            )}
           </div>
         }
       </div>
-      <div>
-        <button className='mt-32' onClick={undo}>UNDO</button>
+      <div className='flex mt-10'>
+        <button className='' onClick={undo}>UNDO</button>
+        <button className='' onClick={newGame}>SHUFFLE</button>
       </div>
     </div>
   )
