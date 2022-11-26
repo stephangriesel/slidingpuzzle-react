@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { rand } from './utils/index'
-import ConfettiExplosion from 'react-confetti-explosion'
 
 // set grid
 const NUM_ROWS = 3;
@@ -12,14 +11,6 @@ const EMPTY_INDEX = NUM_TILES - 1;
 const SHUFFLE_MOVES_RANGE = [60, 80];
 // direction of cards
 const MOVE_DIRECTIONS = ['up', 'down', 'left', 'right'];
-
-const tinyExplodeProps = {
-  force: 0.4,
-  duration: 2000,
-  particleCount: 30,
-  floorHeight: 500,
-  floorWidth: 300
-};
 
 class GameState {
   // singleton with static property
@@ -211,7 +202,6 @@ function Tile({ index, pos, onClick }) {
 
 const App = () => {
   const [board, moves, solved, newGame, undo, move] = useGameState();
-  const [isExploding, setIsExploding] = useState(false);
   return (
     <div className="flex flex-col items-center">
       <div className='mb-10'>
@@ -227,12 +217,9 @@ const App = () => {
         }
         {solved &&
           <div className='overlay'>
-            {isExploding && (
-              <button onClick={newGame} onLoad={() => setIsExploding(!isExploding)}>
-                <ConfettiExplosion {...tinyExplodeProps} />
+              <button onClick={newGame}>
                 NEW GAME?
               </button>
-            )}
           </div>
         }
       </div>
