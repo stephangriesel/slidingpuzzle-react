@@ -105,7 +105,8 @@ class GameState {
 
   // For loop to check if board is solved
   isSolved() {
-    for (let i = 0; i < NUM_TILES; i++) {
+    const ARR_NUM_TILES = Array.from(Array(NUM_TILES).keys()).map(x => x + 1)
+    for (let i in ARR_NUM_TILES) {
       if (this.board[i][0] !== GameState.solvedBoard[i][0]
         || this.board[i][1] !== GameState.solvedBoard[i][1])
         return false;
@@ -133,7 +134,8 @@ class GameState {
 
     // find index tile in posToMove
     let tileToMove = EMPTY_INDEX;
-    for (let i = 0; i < NUM_TILES; i++) {
+    const ARR_NUM_TILES = Array.from(Array(NUM_TILES).keys()).map(x => x + 1)
+    for (let i in ARR_NUM_TILES) {
       if (this.board[i][0] === posToMove[0] && this.board[i][1] === posToMove[1]) {
         tileToMove = i;
         break;
