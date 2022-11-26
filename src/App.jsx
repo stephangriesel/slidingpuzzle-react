@@ -215,7 +215,7 @@ const App = () => {
       <div className='board scale-75 md:scale-90 lg:scale-100 transition-all cursor-move'>
         {
           board.slice(0, -1).map((pos, index) => (
-            <Tile index={index} pos={pos} onClick={move(index)} />
+            <Tile key={index} index={index} pos={pos} onClick={move(index)} />
           ))
         }
         {solved &&
