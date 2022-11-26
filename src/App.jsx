@@ -47,11 +47,10 @@ class GameState {
     this.shuffle();
   }
 
-  shuffle() { // TO DO: Create button with onClick to shuffle
+  shuffle() {
     // Shuffling magic happens here
     this.shuffling = true;
-    let shuffleMoves = rand(...SHUFFLE_MOVES_RANGE);
-    console.log("check shuffle moves", shuffleMoves)
+    let shuffleMoves = rand(...SHUFFLE_MOVES_RANGE); // TO DO: change to const
     while (shuffleMoves-- > 0) { //  post decrement operator -- followed by the greater than operator > (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Decrement)
       this.moveInDirection(MOVE_DIRECTIONS[rand(0, 3)]); // shuffle currently set to 3, update this to shuffle even more
     }
@@ -104,7 +103,7 @@ class GameState {
     return true;
   }
 
-  isSolved() {
+  isSolved() { // For loop, explain what I am doing
     for (let i = 0; i < NUM_TILES; i++) {
       if (this.board[i][0] !== GameState.solvedBoard[i][0]
         || this.board[i][1] !== GameState.solvedBoard[i][1])
@@ -156,7 +155,7 @@ class GameState {
   }
 }
 
-function useGameState() {
+const useGameState = () => {
   // current GameState instance
   const gameState = GameState.getInstance();
 
@@ -164,20 +163,20 @@ function useGameState() {
   const [state, setState] = useState(gameState.getState());
 
   // new game and update state
-  function newGame() {
+  const newGame = () => {
     gameState.startNewGame();
     setState(gameState.getState());
   }
 
   // undo latest move and update state
-  function undo() {
+  const undo = () => {
     gameState.undo();
     setState(gameState.getState());
   }
 
-  // function move i-th tile\
+  // function to move i-th tile
   // update state
-  function move(i) {
+  const move = (i) => {
     return function () {
       gameState.moveTile(i);
       setState(gameState.getState());
@@ -190,7 +189,7 @@ function useGameState() {
 // Note to self: For more tiles decrease dimension to make them all fit.
 // Currently set for 9 grid, for 16 grid change 132 to 100
 // Remember to also ajust index remainder values
-function Tile({ index, pos, onClick }) {
+const Tile = ({ index, pos, onClick }) => {
   const top = pos[0] * 132 + 5;
   const left = pos[1] * 132 + 5;
   const bgLeft = (index % 3) * 132 + 5;
@@ -199,12 +198,12 @@ function Tile({ index, pos, onClick }) {
   return <div
     className='tile'
     onClick={onClick}
-    style={{ top, left, backgroundPosition: `-${bgLeft}px -${bgTop}px` }}
+    style={{ top, left, backgroundPosition: `-${bgLeft}px -${bgTop}px` }} // Reason: Function generates styles, if statically defined things might break
   />;
 }
 
 const App = () => {
-  const [board, moves, solved, newGame, undo, move] = useGameState();
+  const [board, moves, solved, newGame, undo, move] = useGameState(); // Note to self: GameState staically defined above, here we are using the GameState & passing the functions
   return (
     <div className="flex flex-col items-center place-content-center h-screen bg-gradient-radial from-white via-white to-dark-yellow">
       <div className='mb-10'>
