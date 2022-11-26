@@ -50,7 +50,7 @@ class GameState {
   shuffle() {
     // Shuffling magic happens here
     this.shuffling = true;
-    let shuffleMoves = rand(...SHUFFLE_MOVES_RANGE); // TO DO: change to const
+    let shuffleMoves = rand(...SHUFFLE_MOVES_RANGE);
     while (shuffleMoves-- > 0) { //  post decrement operator -- followed by the greater than operator > (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Decrement)
       this.moveInDirection(MOVE_DIRECTIONS[rand(0, 3)]); // shuffle currently set to 3, update this to shuffle even more
     }
@@ -103,7 +103,8 @@ class GameState {
     return true;
   }
 
-  isSolved() { // For loop, explain what I am doing
+  // For loop to check if board is solved
+  isSolved() {
     for (let i = 0; i < NUM_TILES; i++) {
       if (this.board[i][0] !== GameState.solvedBoard[i][0]
         || this.board[i][1] !== GameState.solvedBoard[i][1])
@@ -115,8 +116,8 @@ class GameState {
   // undo
   undo() {
     if (this.stack.length === 0) return false;
-    this.board = this.stack.pop();
-    this.moves -= 1;
+    this.board = this.stack.pop(); // Removes the last element from an array and returns it. If the array is empty, undefined is returned and the array is not modified.
+    this.moves -= 1; // The subtraction assignment (-=) operator subtracts the value of the right operand from a variable and assigns the result to the variable. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Subtraction_assignment
   }
 
   moveInDirection(dir) {
@@ -203,7 +204,7 @@ const Tile = ({ index, pos, onClick }) => {
 }
 
 const App = () => {
-  const [board, moves, solved, newGame, undo, move] = useGameState(); // Note to self: GameState staically defined above, here we are using the GameState & passing the functions
+  const [board, moves, solved, newGame, undo, move] = useGameState(); // Note to self: GameState statically defined above, here we are using the GameState & passing the functions
   return (
     <div className="flex flex-col items-center place-content-center h-screen bg-gradient-radial from-white via-white to-dark-yellow">
       <div className='mb-10'>
