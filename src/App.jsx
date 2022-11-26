@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { rand } from './utils/index'
 
+import Shuffle from './components/icons/Shuffle'
+import Undo from './components/icons/Undo';
+
 // set grid
 const NUM_ROWS = 3;
 const NUM_COLS = 3;
@@ -203,13 +206,13 @@ function Tile({ index, pos, onClick }) {
 const App = () => {
   const [board, moves, solved, newGame, undo, move] = useGameState();
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center place-content-center h-screen bg-gradient-radial from-white via-white to-dark-yellow">
       <div className='mb-10'>
-        <div className='moves'>
-          {moves}
+        <div className='moves m-5 text-3xl uppercase'>
+          Moves: {moves} 
         </div>
       </div>
-      <div className='board scale-75 md:scale-90 lg:scale-100 transition-all'>
+      <div className='board scale-75 md:scale-90 lg:scale-100 transition-all cursor-move'>
         {
           board.slice(0, -1).map((pos, index) => (
             <Tile index={index} pos={pos} onClick={move(index)} />
@@ -217,15 +220,19 @@ const App = () => {
         }
         {solved &&
           <div className='overlay'>
-              <button onClick={newGame}>
+              <button className='animate-wiggle text-xl' onClick={newGame}>
                 NEW GAME?
               </button>
           </div>
         }
       </div>
       <div className='flex mt-10'>
-        <button className='' onClick={undo}>UNDO</button>
-        <button className='' onClick={newGame}>SHUFFLE</button>
+        <button className='bg-light-yellow p-2 m-2 rounded-full drop-shadow-md hover:bg-white hover:ease-in hover:duration-300' onClick={undo}>
+          <Undo />
+        </button>
+        <button className='bg-purple p-2 m-2 rounded-full drop-shadow-md hover:bg-white hover:ease-in hover:duration-300' onClick={newGame}>
+          <Shuffle />
+        </button>
       </div>
     </div>
   )
