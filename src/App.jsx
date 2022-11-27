@@ -210,7 +210,7 @@ const App = () => {
   return (
     <div className="flex flex-col items-center place-content-center h-screen bg-gradient-radial from-white via-white to-dark-yellow">
       <div className='mb-10'>
-        <div className='moves flex flex-col text-center mb-5 p-3 border-dark-yellow bg-gray text-white border-8 scale-75 lg:scale-100 rounded-br-3xl rounded-bl-3xl transition-all'>
+        <div className='flex flex-col text-center mb-5 p-3 border-dark-yellow bg-gray text-white border-8 scale-75 lg:scale-100 rounded-br-3xl rounded-bl-3xl transition-all'>
           <span className='text-8xl transition animate-pulse' >{moves}</span> 
         </div>
       </div>
