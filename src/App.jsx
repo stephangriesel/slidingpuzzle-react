@@ -210,11 +210,11 @@ const App = () => {
   return (
     <div className="flex flex-col items-center place-content-center h-screen bg-gradient-radial from-white via-white to-dark-yellow">
       <div className='mb-10'>
-        <div className='moves m-5 text-3xl uppercase'>
-          Moves: {moves} 
+        <div className='moves flex flex-col text-center p-3 border-dark-yellow bg-gray text-white border-8 scale-75 lg:scale-100 rounded-br-3xl rounded-bl-3xl transition-all'>
+          <span className='text-8xl transition animate-pulse' >{moves}</span> 
         </div>
       </div>
-      <div className='board scale-75 md:scale-90 lg:scale-100 transition-all cursor-move'>
+      <div className='board scale-50 md:scale-90 lg:scale-100 transition-all cursor-move'>
         {
           board.slice(0, -1).map((pos, index) => (
             <Tile key={index} index={index} pos={pos} onClick={move(index)} />
@@ -222,7 +222,7 @@ const App = () => {
         }
         {solved &&
           <div className='overlay'>
-              <button className='animate-wiggle text-xl' onClick={newGame}>
+              <button className='animate-wiggle text-4xl' onClick={newGame}>
                 NEW GAME?
               </button>
           </div>
