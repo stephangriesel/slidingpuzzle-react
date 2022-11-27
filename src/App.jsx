@@ -199,7 +199,7 @@ const Tile = ({ index, pos, onClick }) => {
   const bgTop = Math.floor(index / 3) * 132 + 5;
 
   return <div
-    className='tile'
+    className='absolute bg-[length:400px_400px] tile w-[130px] h-[130px] bg-white/0 bg-tile transition-all duration-300'
     onClick={onClick}
     style={{ top, left, backgroundPosition: `-${bgLeft}px -${bgTop}px` }} // Reason: Function generates styles, if statically defined things might break
   />;
@@ -210,18 +210,18 @@ const App = () => {
   return (
     <div className="flex flex-col items-center place-content-center h-screen bg-gradient-radial from-white via-white to-dark-yellow">
       <div className='mb-10'>
-        <div className='moves flex flex-col text-center p-3 border-dark-yellow bg-gray text-white border-8 scale-75 lg:scale-100 rounded-br-3xl rounded-bl-3xl transition-all'>
+        <div className='moves flex flex-col text-center mb-5 p-3 border-dark-yellow bg-gray text-white border-8 scale-75 lg:scale-100 rounded-br-3xl rounded-bl-3xl transition-all'>
           <span className='text-8xl transition animate-pulse' >{moves}</span> 
         </div>
       </div>
-      <div className='board scale-50 md:scale-90 lg:scale-100 transition-all cursor-move'>
+      <div className='relative w-[400px] h-[400px] scale-75 md:scale-90 lg:scale-100 transition-all cursor-move'>
         {
           board.slice(0, -1).map((pos, index) => (
             <Tile key={index} index={index} pos={pos} onClick={move(index)} />
           ))
         }
         {solved &&
-          <div className='overlay'>
+          <div className='flex justify-center absolute w-[100%] h-[100%] bg-confetti z-10 opacity-90'>
               <button className='animate-wiggle text-4xl' onClick={newGame}>
                 NEW GAME?
               </button>

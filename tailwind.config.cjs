@@ -1,6 +1,10 @@
 module.exports = {
   content:["./src/**/*.{js,jsx}"],
   theme: {
+    backgroundImage: {
+      'tile': "url('./assets/smiley.svg')",
+      'confetti': "url('./assets/confetti.svg')",
+    },
     colors: {
       'black': '#000000',
       'white': '#FFFFFF',
@@ -22,6 +26,9 @@ module.exports = {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      },
+      transitionDuration: {
+        '2000': '2000ms',
       }
     },
   },
