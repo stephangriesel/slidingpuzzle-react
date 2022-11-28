@@ -134,7 +134,9 @@ class GameState {
 
     // find index tile in posToMove
     let tileToMove = EMPTY_INDEX;
+    console.log("tile to move", tileToMove)
     const ARR_NUM_TILES = Array.from(Array(NUM_TILES).keys()).map(x => x + 1)
+    console.log("array tiles", ARR_NUM_TILES);
     for (let i in ARR_NUM_TILES) {
       if (this.board[i][0] === posToMove[0] && this.board[i][1] === posToMove[1]) {
         tileToMove = i;
@@ -199,7 +201,7 @@ const Tile = ({ index, pos, onClick }) => {
   const bgTop = Math.floor(index / 3) * 132 + 5;
 
   return <div
-    className='absolute bg-[length:400px_400px] tile w-[130px] h-[130px] bg-white/0 bg-tile transition-all duration-300'
+    className='absolute bg-white/0 bg-tile bg-[length:400px_400px] transition-all duration-300 h-[130px] tile w-[130px]'
     onClick={onClick}
     style={{ top, left, backgroundPosition: `-${bgLeft}px -${bgTop}px` }} // Reason: Function generates styles, if statically defined things might break
   />;
@@ -208,20 +210,20 @@ const Tile = ({ index, pos, onClick }) => {
 const App = () => {
   const [board, moves, solved, newGame, undo, move] = useGameState(); // Note to self: GameState statically defined above, here we are using the GameState & passing the functions
   return (
-    <div className="flex flex-col items-center place-content-center h-screen bg-gradient-radial from-white via-white to-dark-yellow">
+    <div className="bg-gradient-radial from-white via-white to-dark-yellow flex flex-col h-screen items-center place-content-center">
       <div className='mb-10'>
-        <div className='flex flex-col text-center mb-5 p-3 border-dark-yellow bg-gray text-white border-8 scale-75 lg:scale-100 rounded-br-3xl rounded-bl-3xl transition-all'>
-          <span className='text-8xl transition animate-pulse' >{moves}</span> 
+        <div className='bg-gray border-dark-yellow flex flex-col mb-5 p-3 rounded-br-3xl rounded-bl-3xl transition-all text-center text-white border-8 scale-75 lg:scale-100'>
+          <span className='animate-pulse text-8xl transition' >{moves}</span> 
         </div>
       </div>
-      <div className='relative w-[400px] h-[400px] scale-75 md:scale-90 lg:scale-100 transition-all cursor-move'>
+      <div className='cursor-move h-[400px] relative w-[400px] scale-75 md:scale-90 lg:scale-100 transition-all'>
         {
           board.slice(0, -1).map((pos, index) => (
             <Tile key={index} index={index} pos={pos} onClick={move(index)} />
           ))
         }
         {solved &&
-          <div className='flex justify-center absolute w-[100%] h-[100%] bg-confetti z-10 opacity-90'>
+          <div className='absolute bg-confetti flex h-[100%] justify-center opacity-90 w-[100%] z-10'>
               <button className='animate-wiggle text-4xl' onClick={newGame}>
                 NEW GAME?
               </button>
@@ -229,10 +231,10 @@ const App = () => {
         }
       </div>
       <div className='flex mt-10'>
-        <button className='bg-light-yellow p-2 m-2 rounded-full drop-shadow-md hover:bg-white hover:ease-in hover:duration-300' onClick={undo}>
+        <button className='bg-light-yellow drop-shadow-md hover:bg-white hover:ease-in hover:duration-300 m-2  p-2 rounded-full' onClick={undo}>
           <Undo />
         </button>
-        <button className='bg-purple p-2 m-2 rounded-full drop-shadow-md hover:bg-white hover:ease-in hover:duration-300' onClick={newGame}>
+        <button className='bg-dark-yellow hover:bg-white drop-shadow-md hover:ease-in hover:duration-300 m-2 p-2 rounded-full' onClick={newGame}>
           <Shuffle />
         </button>
       </div>
