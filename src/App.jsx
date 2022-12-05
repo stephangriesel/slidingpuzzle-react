@@ -11,7 +11,7 @@ const NUM_TILES = NUM_ROWS * NUM_COLS;
 // index of the empty tile
 const EMPTY_INDEX = NUM_TILES - 1;
 // defines the minimum and maximum number of random moves to scramble the puzzle board
-const SHUFFLE_MOVES_RANGE = [60, 80];
+const SHUFFLE_MOVES_RANGE = [20, 80]; // TODO: add levels, 0, 10 === easy
 // direction of cards
 const MOVE_DIRECTIONS = ['up', 'down', 'left', 'right'];
 
@@ -27,7 +27,7 @@ class GameState {
 
   // static method to generate board state. correct order: i-th at Math.floor(i / 3)th row and i % 3rd column.
   static getNewBoard() {
-    return Array(NUM_TILES).fill(0).map((x, index) => [
+    return Array(NUM_TILES).fill(0).map((x, index) => [ // fill method: https://www.w3schools.com/jsref/jsref_fill.asp
       Math.floor(index / NUM_ROWS),
       index % NUM_COLS
     ]);
@@ -52,7 +52,7 @@ class GameState {
     this.shuffling = true;
     let shuffleMoves = rand(...SHUFFLE_MOVES_RANGE);
     while (shuffleMoves-- > 0) { //  post decrement operator -- followed by the greater than operator > (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Decrement)
-      this.moveInDirection(MOVE_DIRECTIONS[rand(0, 3)]); // shuffle currently set to 3, update this to shuffle even more
+      this.moveInDirection(MOVE_DIRECTIONS[rand(0, 3)]);
     }
 
     // reset shuffle
@@ -192,6 +192,7 @@ const useGameState = () => {
 }
 
 // Note to self: For more tiles decrease dimension to make them all fit.
+// TODO: Add option to choose preferred grid
 // Currently set for 9 grid, for 16 grid change 132 to 100
 // Remember to also ajust index remainder values
 const Tile = ({ index, pos, onClick }) => {
